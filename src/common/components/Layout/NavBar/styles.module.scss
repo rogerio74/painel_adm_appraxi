@@ -1,0 +1,143 @@
+.container_nav_bar{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  width: 200px;
+  height: 100vh;
+
+
+  background-color: var(--primary_light);
+
+  border-right: 1px solid #ddd;
+  ul{
+    flex: 1;
+    width: 100%;
+    padding-top: 3rem;
+    li{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+
+      width: 100%;
+      padding: 1rem;
+
+
+      position: relative;
+
+      font-size: 1.2rem;
+      list-style: none;
+
+      transition: 300ms ease-in-out;
+
+
+      &:after{
+        content: "";
+        bottom: 0;
+        width: 0%;
+        left: 0;
+        height: 1px;
+        position: absolute;
+
+      }
+      &:hover{
+        color: var(--primary);
+        &:after{
+            transition: 300ms;
+            width: 100%;
+        }
+      }
+      &[data-active="true"]{
+        color: var(--primary);
+
+        &:before{
+          content: "";
+          left: 0;
+          width: 3px;
+          height: 60%;
+          background-color: var(--primary);
+          position: absolute;
+
+          border-bottom-right-radius: 10px;
+          border-top-right-radius: 10px;
+        }
+
+      }
+
+      a{
+
+        display: flex;
+        align-items: center;
+
+        height: 100%;
+        width: 100%;
+
+
+        span{
+          margin-left: 1.4rem;
+        }
+      }
+    }
+  }
+
+}
+
+.header_nav_bar{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  width: 100%;
+
+  padding: 1rem 0;
+
+  h2{
+    font-size: 1.8rem;
+  }
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 0;
+    color: var(--text);
+    svg{
+      font-size: 1.8rem;
+
+    }
+  }
+}
+
+.button_logout {
+  height: 60px;
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: auto;
+  display: grid;
+  place-items: center;
+  button{
+    margin-left: -1.4rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary_light);
+    border: 0;
+    color: var(--text);
+    svg{
+      transform: rotate(180);
+      font-size: 1.4rem;
+      margin-right: 0.5rem;
+    }
+
+  }
+  button[data-isClose="false"]{
+    margin-left: 0;
+    span{
+      opacity: 0;
+      background-color: transparent;
+      display: none;
+    }
+  }
+
+}

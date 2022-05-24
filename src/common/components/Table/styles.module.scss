@@ -1,0 +1,130 @@
+.container_table {
+  min-height: 450px;
+  display: flex;
+  background-color: var(--white);
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  overflow-x: auto;
+  width: 100%;
+  box-shadow: 1px 3px 1px #ddd;
+  padding:  10px 0;
+
+  table{
+    min-width: 400px;
+    width: 100%;
+    overflow-wrap: break-word;
+    height: auto;
+    border-collapse: collapse;
+    thead{
+      text-align: left;
+
+      tr{
+        color: var(--text);
+        border-bottom: 1px solid #ddd;
+        th{
+          font-size: 1rem;
+          font-weight: 500;
+          padding: 10px;
+          text-transform: capitalize;
+          vertical-align:middle;
+        }
+      }
+    }
+    tbody{
+      margin-top: 1rem;
+      height: 100%;
+      tr{
+        border-bottom: 0.6px solid #ddd;
+        td{
+          color: var(--text);
+          font-size: 0.79rem;
+          font-size: 0.75rem;
+          overflow-wrap: break-word;
+          padding:10px 10px;
+          font-weight: 500;
+
+          min-height: 20px;
+         span{
+           display: flex;
+           align-items: center;
+           font-size: 0.9rem;
+           svg{
+             font-size: 1rem;
+             color: var(--text);
+             margin-right: 0.2rem;
+
+           }
+         }
+       }
+
+      }
+    }
+  }
+  @media (max-width: 700px) {
+    overflow-x: scroll;
+    width: min(600px, 100% );
+
+
+  }
+}
+.pagination {
+
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  span {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    padding: 5px;
+    &:first-child{
+      margin-right: 1rem;
+
+    }
+    strong {
+      color: var(--gray-350);
+    }
+  }
+  svg{
+    font-size: 0.9rem;
+  }
+
+}
+.buttons_pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span{
+    margin: 0 5px;
+    box-shadow: 1px 3px #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: var(--white);
+    font-size: 0.5rem;
+    color: var(--gray-500);
+  }
+  button {
+    box-shadow: 1px 3px #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--white);
+    font-size: 1.2rem;
+    color: var(--gray-500);
+    &:hover{
+      color: var(--white);
+      background-color: var(--primary);
+    }
+  }
+
+}
