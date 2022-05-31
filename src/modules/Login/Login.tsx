@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import Image from 'next/image'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { HiOutlineMail } from 'react-icons/hi'
 import { MdOutlineVpnKey } from 'react-icons/md'
@@ -20,6 +21,7 @@ const signInSchema = yup.object().shape({
 })
 
 export const Login = () => {
+  const [loading, setLoading] = useState(false)
   const { signIn } = useAuth()
   const {
     register,
@@ -30,7 +32,14 @@ export const Login = () => {
   })
 
   const handleLogin: SubmitHandler<IDataLogin> = async (values) => {
-    await signIn(values)
+    setLoading(true)
+    try {
+      await signIn(values)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -67,7 +76,7 @@ export const Login = () => {
               placeholder="Insira sua Senha"
               Icon={<MdOutlineVpnKey />}
             />
-            <Button type="submit" title="Enviar" />
+            <Button type="submit" title={!loading ? 'Enviar' : '...'} />
           </form>
         </div>
       </div>

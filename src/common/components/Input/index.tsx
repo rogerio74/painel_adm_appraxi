@@ -13,7 +13,7 @@ import style from './styles.module.scss'
 interface IInputBaseProps extends InputHTMLAttributes<HTMLInputElement> {
   isPassword?: boolean
   Icon?: ReactNode
-  error: FieldError | undefined
+  error?: FieldError | undefined
   label?: string
 }
 

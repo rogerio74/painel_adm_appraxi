@@ -1,12 +1,13 @@
 import React, { ReactElement } from 'react'
 import { Layout } from '../common/components/Layout'
-import { DashBoard } from '../modules/Dashboard'
+import { Dashboard as Dash } from '../modules/Dashboard'
 
-function dashboard() {
-  return <DashBoard />
+const Dashboard = () => {
+  return <Dash />
 }
-dashboard.getLayout = function getLayout(page: ReactElement) {
+
+Dashboard.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-export default dashboard
+export default Dashboard

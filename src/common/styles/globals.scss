@@ -77,7 +77,7 @@ a {
 .react-modal-content {
   overflow: hidden;
   position: relative;
-  padding: 2rem;
+  padding: 0  2rem;
   width: 100%;
   overflow-y: auto;
   max-height: 500px;
@@ -91,15 +91,28 @@ a {
     }
   }
 }
-.react-modal-close {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: transparent;
-  border: 0;
-  transition: filter 0.2s ease-in-out;
 
-  &:hover {
-    filter: brightness(0.8);
+.header_modal{
+  padding: 1.5rem 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+    transition: filter 0.2s ease-in-out;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
   }
 }

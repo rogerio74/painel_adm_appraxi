@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import styles from './styles.module.scss'
 
@@ -18,6 +20,7 @@ interface IDataProps {
 }
 
 export const CardLesson = ({ data }: IDataProps) => {
+  const { push } = useRouter()
   const generateColor = () => {
     const randomColor = Math.floor(Math.random() * 16777215)
       .toString(16)
@@ -47,7 +50,9 @@ export const CardLesson = ({ data }: IDataProps) => {
           <b>Nivel: </b>
           {data.nivel}
         </p>
-        <button type="button">Ver atividades</button>
+        <Link href={{ pathname: '/licoes/atividades', query: { id: data.id } }}>
+          <a>Atividades</a>
+        </Link>
       </div>
     </div>
   )

@@ -11,8 +11,8 @@ import styles from './styles.module.scss'
 
 const Links = [
   { id: '1', icon: <MdDashboard />, params: '/dashboard', title: 'Dashboard' },
-  { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Users' },
-  { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoáudilogo' },
+  { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Pacientes' },
+  { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' },
   { id: '4', icon: <BiTask />, params: '/licoes', title: 'Lições' }
 ]
 
@@ -63,7 +63,7 @@ export const NavBar = () => {
       </div>
       <ul>
         {Links.map((item, i) => (
-          <li data-active={asPath === item.params} key={item.id}>
+          <li data-active={asPath.includes(item.params)} key={item.id}>
             <LinkComponent
               initial="open"
               animate={openMenu ? 'open' : 'close'}
