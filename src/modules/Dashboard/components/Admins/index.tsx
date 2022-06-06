@@ -22,7 +22,6 @@ export const Admins = () => {
   const [fonos, setFonos] = useState<IFonos[]>([])
   const { handleOpenModal } = useModal()
 
-  console.log(fonos)
   useEffect(() => {
     const colRef = collection(db, 'usuarios')
     const queryCollection = query(colRef, where('isAdmin', '==', true))

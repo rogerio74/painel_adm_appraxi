@@ -43,7 +43,8 @@ export const FormAdmin = () => {
           email: values.email,
           telefone: values.telefone,
           cpf: values.cpf,
-          isAdmin: true
+          isAdmin: true,
+          isFono: false
         })
         handleOpenModal()
       } catch (err) {

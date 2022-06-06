@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { BiPhone, BiUser } from 'react-icons/bi'
@@ -14,6 +14,7 @@ interface IFonos {
   cep: string
   cpf: string
   telefone: string
+  isAdmin: boolean
 }
 const ListFono: React.FC = () => {
   const [fonos, setFonos] = useState<IFonos[]>([])
@@ -27,14 +28,25 @@ const ListFono: React.FC = () => {
       const colRef = collection(db, 'usuarios')
       const queryCollection = query(colRef, where('isFono', '==', true))
       const querySnapshot = await getDocs(queryCollection)
-      const data = querySnapshot.docs.map((doc) => {
+      const data = querySnapshot.docs.map((d) => {
         return {
-          id: doc.id,
-          ...doc.data()
+          id: d.id,
+          ...d.data()
         }
       }) as IFonos[]
 
       setFonos(data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  async function update(id: string, status: boolean) {
+    try {
+      const colRef = doc(db, 'usuarios', id)
+
+      await updateDoc(colRef, {
+        isAdmin: !status
+      })
     } catch (err) {
       console.log(err)
     }
@@ -83,6 +95,11 @@ const ListFono: React.FC = () => {
                 <HiOutlineIdentification />
                 {item.cpf}
               </span>
+            </td>
+            <td>
+              <button type="button" onClick={() => update(item.id, item.isAdmin)}>
+                {item.isAdmin.toString()}
+              </button>
             </td>
           </>
         )}

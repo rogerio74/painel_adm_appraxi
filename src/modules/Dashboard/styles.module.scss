@@ -3,19 +3,33 @@
   flex-direction: column;
   width: 100%;
   padding: 2rem 0;
+  height: 100%;
 
 }
 .header{
   padding: 1rem 0;
 
 }
-.graph{
-  padding: 1rem 0 ;
-  margin-bottom: 1.5rem;
-  width: 100%;
-  overflow-x: auto;
+.graphs_patient{
   display: flex;
-  align-items: center;
-  gap: 30px;
+ flex-direction: row;
+ gap: 1.3rem;
 
+
+}
+.graph_donut_patient{
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ flex: 1;
+
+}
+.graph_line_patient{
+  display: flex;
+  flex: 2;
+
+
+}
+.amount{
+  display: flex;
 }

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { BiLogOutCircle, BiTask } from 'react-icons/bi'
+import { BiLogOutCircle } from 'react-icons/bi'
 import { BsBoxArrowLeft, BsBoxArrowRight } from 'react-icons/bs'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
@@ -12,8 +12,7 @@ import styles from './styles.module.scss'
 const Links = [
   { id: '1', icon: <MdDashboard />, params: '/dashboard', title: 'Dashboard' },
   { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Pacientes' },
-  { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' },
-  { id: '4', icon: <BiTask />, params: '/licoes', title: 'Lições' }
+  { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' }
 ]
 
 export const NavBar = () => {

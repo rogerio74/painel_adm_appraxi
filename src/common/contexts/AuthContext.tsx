@@ -9,6 +9,7 @@ interface Iuser {
   nome: string
   email: string
   isAdmin?: boolean
+  isFono?: boolean
 }
 interface ILoginProps {
   email: string
@@ -34,9 +35,11 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
     try {
       const docRef = doc(db, 'usuarios', id)
       const docSnap = await getDoc(docRef)
-      const { isAdmin } = docSnap.data() as Iuser
+      const { isAdmin, isFono } = docSnap.data() as Iuser
 
-      if (isAdmin) {
+      console.log(isAdmin, isFono)
+
+      if (isAdmin && !isFono) {
         push('/dashboard')
       } else {
         console.log('Você não possui acesso ao sistema')

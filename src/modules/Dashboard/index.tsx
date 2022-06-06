@@ -1,6 +1,8 @@
 import React from 'react'
-import { Admins } from './components/Admins'
-import { GraphPatient } from './components/GraphPatients'
+import { GraphPatient } from './components/GraphPatientsAge'
+import { GraphPatientGender } from './components/GraphPatientsGender'
+import { GraphPatientType } from './components/GraphPatientType'
+import { ListAmount } from './components/ListAmount'
 import styles from './styles.module.scss'
 
 export const Dashboard = () => {
@@ -9,11 +11,16 @@ export const Dashboard = () => {
       <div className={styles.header}>
         <h2>DashBoard</h2>
       </div>
-      <div className={styles.graph}>
-        <GraphPatient title="Pacientes" />
-        <GraphPatient title="Fonoaudiologos" />
+      <ListAmount />
+      <div className={styles.graphs_patient}>
+        <div className={styles.graph_line_patient}>
+          <GraphPatient />
+        </div>
+        <div className={styles.graph_donut_patient}>
+          <GraphPatientGender />
+          <GraphPatientType />
+        </div>
       </div>
-      <Admins />
     </div>
   )
 }

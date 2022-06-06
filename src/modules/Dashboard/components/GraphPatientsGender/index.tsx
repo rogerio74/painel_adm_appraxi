@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
@@ -7,55 +8,61 @@ import styles from './styles.module.scss'
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
 })
-const options = {
-  chart: {
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    },
-    foreColor: 'green'
-  },
-  grid: {
-    show: false
-  },
-  dataLabels: {
-    enabled: false
-  },
-  tooltip: {
-    enabled: false
-  },
-  xaxis: {
-    type: 'datetime',
-    axisBorder: {
-      color: 'blue'
-    },
-    axisTicks: {
-      color: '#222'
-    },
-    categories: [
-      '2021-03-18T00:00:00.000Z',
-      '2021-03-19T00:00:00.000Z',
-      '2021-03-20T00:00:00.000Z',
-      '2021-03-21T00:00:00.000Z',
-      '2021-03-22T00:00:00.000Z',
-      '2021-03-23T00:00:00.000Z',
-      '2021-03-24T00:00:00.000Z'
-    ]
-  },
+
+const options2 = {
   fill: {
-    opacity: 0.3,
-    type: 'gradient',
-    gradient: {
-      shade: 'dark',
-      opacityFrom: 0.7,
-      opacityTo: 0.3
+    colors: ['#f44336', '#2e7d32']
+  },
+
+  dataLabels: {
+    style: {
+      colors: ['#fff', '#fff']
+    }
+  },
+
+  tooltip: {
+    enabled: false,
+    enabledOnSeries: undefined
+  },
+  legend: {
+    show: true,
+    color: ['#f44336', '#2e7d32'],
+    showForSingleSeries: false,
+
+    floating: false,
+    fontSize: '14px',
+    fontWeight: 400,
+    inverseOrder: false,
+
+    offsetX: 0,
+    offsetY: 0,
+    labels: {
+      colors: ['#2e7d32', '#f44336'],
+      useSeriesColors: false
+    },
+    markers: {
+      width: 12,
+      height: 12,
+      strokeWidth: 0,
+      strokeColor: '#414141',
+      fillColors: ['#2e7d32', '#f44336'],
+      radius: 12,
+      offsetX: 0,
+      offsetY: 0
+    },
+    itemMargin: {
+      horizontal: 5,
+      vertical: 0
+    },
+    onItemClick: {
+      toggleDataSeries: false
+    },
+    onItemHover: {
+      highlightDataSeries: false,
+      color: ['#2e7d32', '#f44336']
     }
   }
 }
-const options2 = { labels: ['Masculino', 'Feminino'] }
-const series = [4, 5, 6, 1, 5]
 
 interface Igender {
   f: number
@@ -65,7 +72,7 @@ interface IGraphProps {
   title: string
 }
 
-export const GraphPatient = ({ title }: IGraphProps) => {
+export const GraphPatientGender = () => {
   const [gender, setGender] = useState<Igender>({} as Igender)
 
   async function getPatients() {
@@ -91,19 +98,12 @@ export const GraphPatient = ({ title }: IGraphProps) => {
   useEffect(() => {
     getPatients()
   }, [])
-
   if (!gender.f) return <h1>loading</h1>
 
   return (
     <div className={styles.container}>
-      <h2>{title}</h2>
-      <Chart
-        options={options2}
-        series={[gender.f, gender.m]}
-        type="donut"
-        height={400}
-        width={300}
-      />
+      <h2>Gênero dos pacientes</h2>
+      <Chart options={options2} series={[gender.f, gender.m]} type="pie" height={150} />
     </div>
   )
 }
