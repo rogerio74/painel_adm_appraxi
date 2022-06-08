@@ -51,7 +51,7 @@ export const GraphPatientAge = ({ ages }: IGraphProps) => {
     <div className={styles.container}>
       <h2>Faixa etária dos pacientes</h2>
 
-      <Chart options={options} series={series} type="bar" height={250} />
+      <Chart options={options} series={series} type="bar" height={300} />
     </div>
   )
 }
