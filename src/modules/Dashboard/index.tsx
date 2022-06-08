@@ -59,7 +59,7 @@ export const Dashboard = () => {
       setAmountPatient(patients.length)
       setAmountFono(data.filter((item) => item.isFono === true).length)
       setAmountFonoParceiro(
-        data.filter((item) => item.isFono === true && item.isAdmin === true).length
+        data.filter((item) => item.isFono === true && item.isAdmin === false).length
       )
     } catch (err) {
       console.log(err)
