@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
+import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { parseCookies } from 'nookies'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { db } from '../services'
 
 interface Iuser {
@@ -18,7 +20,7 @@ interface ILoginProps {
 interface IProps {
   signIn: ({ email, password }: ILoginProps) => Promise<void>
   signOut: () => Promise<void>
-  userDt: Iuser
+  userDt: Iuser | null
   token: string | null
 }
 interface AuthContextProviderProps {
@@ -27,7 +29,7 @@ interface AuthContextProviderProps {
 const AuthContext = createContext({} as IProps)
 
 const AuthProvider = ({ children }: AuthContextProviderProps) => {
-  const [userDt, setUserDt] = useState<Iuser>({} as Iuser)
+  const [userDt, setUserDt] = useState<Iuser | null>({} as Iuser)
   const [token, setToken] = useState<string | null>(null)
   const { push } = useRouter()
 
@@ -36,8 +38,6 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
       const docRef = doc(db, 'usuarios', id)
       const docSnap = await getDoc(docRef)
       const { isAdmin, isFono } = docSnap.data() as Iuser
-
-      console.log(isAdmin, isFono)
 
       if (isAdmin && !isFono) {
         push('/dashboard')
@@ -48,8 +48,9 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
       console.error('Error adding document: ', e)
     }
   }
-  const auth = getAuth()
   const signIn = async ({ email, password }: ILoginProps) => {
+    const auth = getAuth()
+
     try {
       const response = await signInWithEmailAndPassword(auth, email, password)
       const data = response.user
@@ -74,6 +75,25 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
       console.log(error)
     }
   }
+  async function readToken() {
+    const { '@Appraxi:token': appraxi_token } = parseCookies()
+
+    setToken(appraxi_token)
+    if (appraxi_token) {
+      const token_decoded: Iuser = await jwt_decode(appraxi_token)
+
+      console.log(token_decoded)
+      setUserDt({
+        nome: token_decoded.nome,
+        email: token_decoded.email
+      })
+    } else {
+      setUserDt(null)
+    }
+  }
+  useEffect(() => {
+    readToken()
+  }, [])
 
   return (
     <AuthContext.Provider

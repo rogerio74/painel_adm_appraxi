@@ -5,26 +5,29 @@ import { BiLogOutCircle } from 'react-icons/bi'
 import { BsBoxArrowLeft, BsBoxArrowRight } from 'react-icons/bs'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
-import { RiUserVoiceLine } from 'react-icons/ri'
+import { RiUserSettingsLine, RiUserVoiceLine } from 'react-icons/ri'
+import { useAuth } from '../../../contexts/AuthContext'
 import { LinkComponent } from './Link'
 import styles from './styles.module.scss'
 
 const Links = [
   { id: '1', icon: <MdDashboard />, params: '/dashboard', title: 'Dashboard' },
   { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Pacientes' },
-  { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' }
+  { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' },
+  { id: '4', icon: <RiUserSettingsLine />, params: '/admins', title: 'Administradores' }
 ]
 
 export const NavBar = () => {
   const [openMenu, setOpenMenu] = useState(true)
   const { asPath } = useRouter()
+  const { signOut } = useAuth()
 
   function handleOpenMenu() {
     setOpenMenu(!openMenu)
   }
   const menuVariants = {
     open: {
-      width: 200
+      width: 230
     },
     close: {
       width: 60,
@@ -74,7 +77,7 @@ export const NavBar = () => {
         ))}
       </ul>
       <div className={styles.button_logout}>
-        <button data-isClose={openMenu} type="button">
+        <button onClick={() => signOut()} data-isClose={openMenu} type="button">
           <BiLogOutCircle />
           <span>Sair do App</span>
         </button>

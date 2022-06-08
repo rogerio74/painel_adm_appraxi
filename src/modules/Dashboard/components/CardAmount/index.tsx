@@ -13,7 +13,6 @@ export const CardAmount = ({ amount, bgcolor, title, Icon }: ICardProps) => {
     <div style={{ backgroundColor: bgcolor }} className={styles.container_card_dashboard}>
       <div className={styles.header_card_dashboard}>
         <h2>{title}</h2>
-        {Icon}
       </div>
 
       <div className={styles.center_card_dashboard}>

@@ -1,41 +1,37 @@
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { BiPhone, BiUser } from 'react-icons/bi'
-import { FiUserPlus, FiUserX } from 'react-icons/fi'
 import { HiOutlineIdentification, HiOutlineMail } from 'react-icons/hi'
-import { IoIosMore } from 'react-icons/io'
 import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
 import { ModalComponent } from '../../../../common/components/Modal'
 import { Table } from '../../../../common/components/Table'
 import { useModal } from '../../../../common/contexts/ModalContext'
 import { db } from '../../../../common/services'
-import { OptionsFono } from '../OptionFono'
+import { FormAdmin } from '../FormAdmin'
 import styles from './styles.module.scss'
 
-export interface IFonos {
+interface IFonos {
   id: string
   nome: string
   email: string
   cep: string
   cpf: string
   telefone: string
-  isAdmin: boolean
-  fotoPerfil: string
 }
-interface IData {
-  data: IFonos
-}
-const ListFono: React.FC = () => {
+
+export const ListAdmins = () => {
   const [fonos, setFonos] = useState<IFonos[]>([])
   const { handleOpenModal } = useModal()
-  const [dataFono, setDataFono] = useState({} as IFonos)
-  const [showOptions, setShowOptions] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   function getUser() {
     try {
       const colRef = collection(db, 'usuarios')
-      const queryCollection = query(colRef, where('isFono', '==', true))
+      const queryCollection = query(
+        colRef,
+        where('isAdmin', '==', true),
+        where('isFono', '==', false)
+      )
 
       onSnapshot(queryCollection, (snapshot) => {
         const data = snapshot.docs.map((doc) => {
@@ -50,7 +46,7 @@ const ListFono: React.FC = () => {
     } catch (err) {
       console.log(err)
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -59,29 +55,28 @@ const ListFono: React.FC = () => {
 
     return () => getUser()
   }, [])
-
-  function getFonoTable(data: IFonos) {
-    setDataFono(data)
-    handleOpenModal()
-  }
-
   const column = [
     { name: 'Nome', id: 'name' },
     { name: 'Email', id: 'email' },
     { name: 'Telefone', id: 'phone' },
-    { name: 'CPF', id: 'cpf' },
-    { name: 'Administrador', id: 'adm' },
-    { name: 'Opções', id: 'more' }
+    { name: 'CPF', id: 'cpf' }
   ]
-
-  console.log(fonos)
+  const variants = {
+    opacity: [0, 1],
+    x: ['100%', '0%']
+  }
 
   return (
-    <div className={styles.container_list_users}>
+    <div className={styles.container}>
       <header>
-        <h1>Fonoaudiólogos</h1>
+        <div className={styles.header}>
+          <h1>Administradores</h1>
+          <button onClick={handleOpenModal} type="button">
+            Add Adm
+          </button>
+        </div>
       </header>
-      {loading ? (
+      {isLoading ? (
         <div className={styles.loading}>
           <LoadingAnimation />
         </div>
@@ -113,26 +108,6 @@ const ListFono: React.FC = () => {
                   {item.cpf}
                 </span>
               </td>
-              <td className={styles.center}>
-                {item.isAdmin ? (
-                  <span>
-                    <FiUserPlus /> Sim
-                  </span>
-                ) : (
-                  <span>
-                    <FiUserX /> Não
-                  </span>
-                )}
-              </td>
-              <td>
-                <button
-                  className={styles.button_more}
-                  type="button"
-                  onClick={() => getFonoTable(item)}
-                >
-                  <IoIosMore />
-                </button>
-              </td>
             </>
           )}
           keyExtractor={({ id }) => id}
@@ -140,11 +115,9 @@ const ListFono: React.FC = () => {
           columns={column}
         />
       )}
-      <ModalComponent title="Opções do fonoaudiologo">
-        <OptionsFono data={dataFono} />
+      <ModalComponent title="Adicionar Administrador">
+        <FormAdmin />
       </ModalComponent>
     </div>
   )
 }
-
-export default ListFono

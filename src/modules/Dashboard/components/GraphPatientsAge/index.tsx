@@ -1,15 +1,15 @@
 /* eslint-disable no-plusplus */
-import { collection, getDocs, query, where } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
-import { db } from '../../../../common/services'
-import { getAge, setAgesColumn } from '../../../../common/utils'
+import React from 'react'
 import styles from './styles.module.scss'
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
 })
 const options = {
+  tooltip: {
+    enabled: false
+  },
   chart: {
     id: 'simple-bar',
     toolbar: {
@@ -18,7 +18,7 @@ const options = {
     zoom: {
       enabled: false
     },
-    foreColor: 'blue'
+    foreColor: '#333'
   },
 
   xaxis: {
@@ -34,44 +34,10 @@ interface Igender {
   m: number
 }
 interface IGraphProps {
-  title: string
+  ages: any
 }
 
-export const GraphPatient = () => {
-  const [gender, setGender] = useState<Igender>({} as Igender)
-  const [ages, setAges] = useState<any>({} as any)
-
-  async function getPatients() {
-    try {
-      const colRef = collection(db, 'usuarios')
-      const queryCollection = query(
-        colRef,
-        where('isFono', '==', false),
-        where('isAdmin', '==', false)
-      )
-      const querySnapshot = await getDocs(queryCollection)
-      const data = querySnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      }) as any[]
-
-      const x = data.map((item) => ({
-        ...item,
-        dataNascimento: item.dataNascimento
-          ? getAge(item.dataNascimento.toDate())
-          : 'nenhuma data informada'
-      }))
-
-      setAges(setAgesColumn(x))
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  useEffect(() => {
-    getPatients()
-  }, [])
+export const GraphPatientAge = ({ ages }: IGraphProps) => {
   const series = [
     {
       name: 'Quant. de pacientes', // will be displayed on the y-axis

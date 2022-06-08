@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 import dynamic from 'next/dynamic'
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './styles.module.scss'
 
 const Chart = dynamic(() => import('react-apexcharts'), {
@@ -8,13 +8,14 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 })
 
 const options2 = {
+  labels: ['free', 'pro', 'premium'],
   fill: {
-    colors: ['#f44336', '#2e7d32']
+    colors: ['#a6faaa', '#f9ba8e', '#ff6c6c']
   },
 
   dataLabels: {
     style: {
-      colors: ['#fff', '#fff']
+      colors: ['#dadada']
     }
   },
 
@@ -24,26 +25,26 @@ const options2 = {
   },
   legend: {
     show: true,
-    color: ['#f44336', '#2e7d32'],
+    color: ['#a6faaa', '#f9ba8e', '#ff6c6c'],
     showForSingleSeries: false,
 
     floating: false,
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: 400,
     inverseOrder: false,
 
     offsetX: 0,
     offsetY: 0,
     labels: {
-      colors: ['#2e7d32', '#f44336'],
+      colors: ['#a6faaa', '#f9ba8e', '#ff6c6c'],
       useSeriesColors: false
     },
     markers: {
       width: 12,
       height: 12,
       strokeWidth: 0,
-      strokeColor: '#414141',
-      fillColors: ['#2e7d32', '#f44336'],
+      strokeColor: '#292929',
+      fillColors: ['#a6faaa', '#f9ba8e', '#ff6c6c'],
       radius: 12,
       offsetX: 0,
       offsetY: 0
@@ -57,54 +58,16 @@ const options2 = {
     },
     onItemHover: {
       highlightDataSeries: false,
-      color: ['#2e7d32', '#f44336']
+      color: ['#a6faaa', '#f9ba8e']
     }
   }
 }
 
-interface Igender {
-  f: number
-  m: number
-}
-interface IGraphProps {
-  title: string
-}
-
 export const GraphPatientType = () => {
-  const [gender, setGender] = useState<Igender>({} as Igender)
-
-  /*   async function getPatients() {
-    try {
-      const colRef = collection(db, 'usuarios')
-      const queryCollection = query(
-        colRef,
-        where('isFono', '==', false),
-        where('isAdmin', '==', false)
-      )
-      const querySnapshot = await getDocs(queryCollection)
-      const data = querySnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      }) as any[]
-
-      setGender({
-        f: data.length,
-        m: data.length
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  } */
-  /*   useEffect(() => {
-    getPatients()
-  }, []) */
-
   return (
     <div className={styles.container}>
-      <h2>Gênero dos pacientes</h2>
-      <Chart options={options2} series={[10, 40]} type="pie" height={150} />
+      <h2>Perfil dos paciente</h2>
+      <Chart options={options2} series={[10, 40, 10]} type="pie" height={150} />
     </div>
   )
 }

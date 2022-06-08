@@ -1,8 +1,8 @@
 import { collection, getDocs, query, where } from 'firebase/firestore'
-import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { BiPhone, BiUser } from 'react-icons/bi'
 import { HiOutlineIdentification, HiOutlineMail } from 'react-icons/hi'
+import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
 import { Table } from '../../../../common/components/Table'
 import { db } from '../../../../common/services'
 import styles from './styles.module.scss'
@@ -17,6 +17,7 @@ interface IPatient {
 }
 const ListPatients: React.FC = () => {
   const [patients, setPatients] = useState<IPatient[]>([])
+  const [loading, setIsLoading] = useState(true)
   const variants = {
     opacity: [0, 1],
     x: ['100%', '0%']
@@ -25,7 +26,11 @@ const ListPatients: React.FC = () => {
   async function getPatients() {
     try {
       const colRef = collection(db, 'usuarios')
-      const queryCollection = query(colRef, where('isFono', '==', false))
+      const queryCollection = query(
+        colRef,
+        where('isFono', '==', false),
+        where('isAdmin', '==', false)
+      )
       const querySnapshot = await getDocs(queryCollection)
       const data = querySnapshot.docs.map((doc) => {
         return {
@@ -37,6 +42,8 @@ const ListPatients: React.FC = () => {
       setPatients(data)
     } catch (err) {
       console.log(err)
+    } finally {
+      setIsLoading(false)
     }
   }
   useEffect(() => {
@@ -50,46 +57,50 @@ const ListPatients: React.FC = () => {
   ]
 
   return (
-    <motion.div
-      animate={variants}
-      transition={{ duration: 0.5, type: 'tween' }}
-      className={styles.container_list_users}
-    >
-      <h1>Pacientes</h1>
-      <Table
-        renderItem={(item) => (
-          <>
-            <td>
-              <span>
-                <BiUser />
-                {item.nome}
-              </span>
-            </td>
-            <td>
-              <span>
-                <HiOutlineMail />
-                {item.email}
-              </span>
-            </td>
-            <td>
-              <span>
-                <BiPhone />
-                {item.telefone}
-              </span>
-            </td>
-            <td>
-              <span>
-                <HiOutlineIdentification />
-                {item.cpf}
-              </span>
-            </td>
-          </>
-        )}
-        keyExtractor={({ id }) => id}
-        rows={patients}
-        columns={column}
-      />
-    </motion.div>
+    <div className={styles.container_list_users}>
+      <header>
+        <h1>Pacientes</h1>
+      </header>
+      {loading ? (
+        <div className={styles.loading}>
+          <LoadingAnimation />
+        </div>
+      ) : (
+        <Table
+          renderItem={(item) => (
+            <>
+              <td>
+                <span>
+                  <BiUser />
+                  {item.nome}
+                </span>
+              </td>
+              <td>
+                <span>
+                  <HiOutlineMail />
+                  {item.email}
+                </span>
+              </td>
+              <td>
+                <span>
+                  <BiPhone />
+                  {item.telefone}
+                </span>
+              </td>
+              <td>
+                <span>
+                  <HiOutlineIdentification />
+                  {item.cpf}
+                </span>
+              </td>
+            </>
+          )}
+          keyExtractor={({ id }) => id}
+          rows={patients}
+          columns={column}
+        />
+      )}
+    </div>
   )
 }
 

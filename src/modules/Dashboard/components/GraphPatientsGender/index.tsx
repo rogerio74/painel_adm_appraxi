@@ -1,8 +1,6 @@
 /* eslint-disable no-plusplus */
-import { collection, getDocs, query, where } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
-import React, { useEffect, useState } from 'react'
-import { db } from '../../../../common/services'
+import React from 'react'
 import styles from './styles.module.scss'
 
 const Chart = dynamic(() => import('react-apexcharts'), {
@@ -10,8 +8,9 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 })
 
 const options2 = {
+  labels: ['masculino', 'feminino'],
   fill: {
-    colors: ['#f44336', '#2e7d32']
+    colors: ['#fb918a', '#8ec7f9']
   },
 
   dataLabels: {
@@ -26,7 +25,7 @@ const options2 = {
   },
   legend: {
     show: true,
-    color: ['#f44336', '#2e7d32'],
+    color: ['#fb918a', '#8ec7f9'],
     showForSingleSeries: false,
 
     floating: false,
@@ -37,7 +36,7 @@ const options2 = {
     offsetX: 0,
     offsetY: 0,
     labels: {
-      colors: ['#2e7d32', '#f44336'],
+      colors: ['#8ec7f9', '#fb918a'],
       useSeriesColors: false
     },
     markers: {
@@ -45,7 +44,7 @@ const options2 = {
       height: 12,
       strokeWidth: 0,
       strokeColor: '#414141',
-      fillColors: ['#2e7d32', '#f44336'],
+      fillColors: ['#8ec7f9', '#fb918a'],
       radius: 12,
       offsetX: 0,
       offsetY: 0
@@ -59,7 +58,7 @@ const options2 = {
     },
     onItemHover: {
       highlightDataSeries: false,
-      color: ['#2e7d32', '#f44336']
+      color: ['#8ec7f9', '#fb918a']
     }
   }
 }
@@ -69,37 +68,10 @@ interface Igender {
   m: number
 }
 interface IGraphProps {
-  title: string
+  gender: Igender
 }
 
-export const GraphPatientGender = () => {
-  const [gender, setGender] = useState<Igender>({} as Igender)
-
-  async function getPatients() {
-    try {
-      const colRef = collection(db, 'usuarios')
-      const queryCollection = query(colRef, where('isFono', '==', true))
-      const querySnapshot = await getDocs(queryCollection)
-      const data = querySnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data()
-        }
-      }) as any[]
-
-      setGender({
-        f: data.length,
-        m: data.length
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  useEffect(() => {
-    getPatients()
-  }, [])
-  if (!gender.f) return <h1>loading</h1>
-
+export const GraphPatientGender = ({ gender }: IGraphProps) => {
   return (
     <div className={styles.container}>
       <h2>Gênero dos pacientes</h2>

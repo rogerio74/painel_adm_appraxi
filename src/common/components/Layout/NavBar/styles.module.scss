@@ -3,11 +3,11 @@
   justify-content: space-between;
   flex-direction: column;
 
-  width: 200px;
+  width: 230px;
   height: 100vh;
 
 
-  background-color: var(--primary_light);
+  background-color: #eee;
 
   border-right: 1px solid #ddd;
   ul{
@@ -121,7 +121,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    background-color: var(--primary_light);
+    background-color: #eee;
     border: 0;
     color: var(--text);
     svg{
