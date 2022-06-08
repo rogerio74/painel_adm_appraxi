@@ -67,7 +67,7 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
       })
       localStorage.setItem('@Appraxi:token', data.refreshToken)
     } catch (err) {
-      console.log(err)
+      showToast({ message: 'As credenciais informadas estão incorretas', type: 'warn' })
     }
   }
 

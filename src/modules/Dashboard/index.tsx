@@ -13,9 +13,14 @@ interface Igender {
   f: number
   m: number
 }
+interface IProps {
+  premium: number
+  free: number
+}
 
 export const Dashboard = () => {
   const [gender, setGender] = useState<Igender>({} as Igender)
+  const [profile, setProfile] = useState<IProps>({} as IProps)
   const [ages, setAges] = useState<any>({} as any)
   const [isLoading, setIsLoading] = useState(true)
   const [amountPatient, setAmountPatient] = useState(0)
@@ -38,6 +43,10 @@ export const Dashboard = () => {
       setGender({
         f: patients.filter((item) => item.genero === 'Feminino').length,
         m: patients.filter((item) => item.genero === 'Masculino').length
+      })
+      setProfile({
+        free: patients.filter((item) => item.isPremium !== true).length,
+        premium: patients.filter((item) => item.isPremium === true).length
       })
       const x = patients.map((item) => ({
         ...item,
@@ -85,7 +94,7 @@ export const Dashboard = () => {
             </div>
             <div className={styles.graph_donut_patient}>
               <GraphPatientGender gender={gender} />
-              <GraphPatientType />
+              <GraphPatientType data={profile} />
             </div>
           </div>
         </>

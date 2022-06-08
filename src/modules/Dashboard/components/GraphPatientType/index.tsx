@@ -7,8 +7,15 @@ const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
 })
 
+interface IProps {
+  premium: number
+  free: number
+}
+interface IData {
+  data: IProps
+}
 const options2 = {
-  labels: ['free', 'pro', 'premium'],
+  labels: ['free', 'premium'],
   fill: {
     colors: ['#a6faaa', '#f9ba8e', '#ff6c6c']
   },
@@ -63,11 +70,11 @@ const options2 = {
   }
 }
 
-export const GraphPatientType = () => {
+export const GraphPatientType = ({ data }: IData) => {
   return (
     <div className={styles.container}>
       <h2>Perfil dos paciente</h2>
-      <Chart options={options2} series={[10, 40, 10]} type="pie" height={150} />
+      <Chart options={options2} series={[data.free, data.premium]} type="pie" height={150} />
     </div>
   )
 }

@@ -28,7 +28,7 @@ export const ListAmount = ({ amountFono, amountFonoParceiro, amountPatient }: IL
         amount={amountFonoParceiro}
         bgcolor="#52A3D0"
         Icon={<MdImageSearch />}
-        title="Fonoaudiólogos parceiros"
+        title="Fonoaudiólogos Parceiros"
       />
     </div>
   )
