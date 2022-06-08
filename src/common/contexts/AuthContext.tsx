@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
+import { FirebaseError } from 'firebase/app'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies'
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { showToast } from '../components/Toast'
 import { db } from '../services'
 
 interface Iuser {
@@ -42,10 +44,12 @@ const AuthProvider = ({ children }: AuthContextProviderProps) => {
       if (isAdmin && !isFono) {
         push('/dashboard')
       } else {
-        console.log('Você não possui acesso ao sistema')
+        showToast({ message: 'Você não possui acesso ao sistema', type: 'warn' })
       }
     } catch (e) {
-      console.error('Error adding document: ', e)
+      const err = e as FirebaseError
+
+      showToast({ message: 'As credenciais informadas estão incorretas', type: 'warn' })
     }
   }
   const signIn = async ({ email, password }: ILoginProps) => {
