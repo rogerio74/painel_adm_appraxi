@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^2.8.8",
     "@types/react-lottie": "^1.2.6",
     "@types/react-modal": "^3.13.1",
+    "@types/uuid": "^8.3.4",
     "apexcharts": "^3.35.2",
     "chart.js": "^3.7.1",
     "firebase": "^9.8.1",
@@ -22,6 +23,7 @@
     "nookies": "^2.5.2",
     "react": "18.1.0",
     "react-apexcharts": "^1.4.0",
+    "react-audio-player": "^0.17.0",
     "react-chartjs-2": "^4.1.0",
     "react-dom": "18.1.0",
     "react-hook-form": "^7.30.0",
@@ -30,6 +32,7 @@
     "react-modal": "^3.15.1",
     "react-toastify": "^9.0.1",
     "sass": "^1.51.0",
+    "uuid": "^8.3.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

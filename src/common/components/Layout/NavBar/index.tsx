@@ -5,7 +5,7 @@ import { BiLogOutCircle } from 'react-icons/bi'
 import { BsBoxArrowLeft, BsBoxArrowRight } from 'react-icons/bs'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
-import { RiUserSettingsLine, RiUserVoiceLine } from 'react-icons/ri'
+import { RiVoiceRecognitionFill, RiUserSettingsLine, RiUserVoiceLine } from 'react-icons/ri'
 import { useAuth } from '../../../contexts/AuthContext'
 import { LinkComponent } from './Link'
 import styles from './styles.module.scss'
@@ -14,7 +14,8 @@ const Links = [
   { id: '1', icon: <MdDashboard />, params: '/dashboard', title: 'Dashboard' },
   { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Pacientes' },
   { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' },
-  { id: '4', icon: <RiUserSettingsLine />, params: '/admins', title: 'Administradores' }
+  { id: '4', icon: <RiUserSettingsLine />, params: '/admins', title: 'Administradores' },
+  { id: '5', icon: <RiVoiceRecognitionFill />, params: '/capture', title: 'Captura' }
 ]
 
 export const NavBar = () => {

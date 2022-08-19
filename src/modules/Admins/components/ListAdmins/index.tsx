@@ -10,7 +10,7 @@ import { db } from '../../../../common/services'
 import { FormAdmin } from '../FormAdmin'
 import styles from './styles.module.scss'
 
-interface IFonos {
+interface IAdmin {
   id: string
   nome: string
   email: string
@@ -20,11 +20,11 @@ interface IFonos {
 }
 
 export const ListAdmins = () => {
-  const [fonos, setFonos] = useState<IFonos[]>([])
+  const [admins, setAdmins] = useState<IAdmin[]>([])
   const { handleOpenModal } = useModal()
   const [isLoading, setIsLoading] = useState(true)
 
-  function getUser() {
+  function queryAdmins() {
     try {
       const colRef = collection(db, 'usuarios')
       const queryCollection = query(
@@ -39,9 +39,9 @@ export const ListAdmins = () => {
             id: doc.id,
             ...doc.data()
           }
-        }) as IFonos[]
+        }) as IAdmin[]
 
-        setFonos(data)
+        setAdmins(data)
       })
     } catch (err) {
       console.log(err)
@@ -51,9 +51,9 @@ export const ListAdmins = () => {
   }
 
   useEffect(() => {
-    getUser()
+    queryAdmins()
 
-    return () => getUser()
+    return () => queryAdmins()
   }, [])
   const column = [
     { name: 'Nome', id: 'name' },
@@ -61,10 +61,6 @@ export const ListAdmins = () => {
     { name: 'Telefone', id: 'phone' },
     { name: 'CPF', id: 'cpf' }
   ]
-  const variants = {
-    opacity: [0, 1],
-    x: ['100%', '0%']
-  }
 
   return (
     <div className={styles.container}>
@@ -111,7 +107,7 @@ export const ListAdmins = () => {
             </>
           )}
           keyExtractor={({ id }) => id}
-          rows={fonos}
+          rows={admins}
           columns={column}
         />
       )}
