@@ -38,6 +38,8 @@ export const Task: React.FC = () => {
           }
         }) as ITask[]
 
+        console.log(data)
+
         setTask(data[0])
       })
     } catch (err) {
