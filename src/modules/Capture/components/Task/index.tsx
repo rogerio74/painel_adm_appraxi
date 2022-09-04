@@ -8,6 +8,7 @@ import { ModalComponent } from '../../../../common/components/Modal'
 import { useModal } from '../../../../common/contexts/ModalContext'
 
 import { db } from '../../../../common/services'
+import { db_audio } from '../../../../common/services/firebase_licao'
 import { FormTask } from '../FormTask'
 import styles from './styles.module.scss'
 
@@ -27,7 +28,7 @@ export const Task: React.FC = () => {
 
   function getTasks() {
     try {
-      const colRef = collection(db, 'capture')
+      const colRef = collection(db_audio, 'capture')
       const queryCollection = query(colRef)
 
       onSnapshot(queryCollection, (snapshot) => {

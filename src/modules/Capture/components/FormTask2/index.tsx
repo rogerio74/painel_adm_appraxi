@@ -1,12 +1,9 @@
-import { addDoc, collection, deleteDoc, doc, updateDoc, writeBatch } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 import { v4 } from 'uuid'
-import * as yup from 'yup'
 import { Button } from '../../../../common/components/Button'
 import { Input } from '../../../../common/components/Input'
-import { useModal } from '../../../../common/contexts/ModalContext'
-import { db, storage } from '../../../../common/services'
+import { storage } from '../../../../common/services/firebase_licao'
 
 import style from './styles.module.scss'
 

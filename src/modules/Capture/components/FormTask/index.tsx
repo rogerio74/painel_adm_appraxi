@@ -12,6 +12,7 @@ import { Input } from '../../../../common/components/Input'
 import { useModal } from '../../../../common/contexts/ModalContext'
 import { auth, db } from '../../../../common/services'
 import style from './styles.module.scss'
+import { db_audio } from '../../../../common/services/firebase_licao'
 
 const createAdminSchema = yup.object().shape({
   name: yup.string().required('Este campo é obrigatório')
@@ -64,7 +65,7 @@ export const FormTask = () => {
 
   async function update() {
     try {
-      const colRef = doc(db, 'capture', `FuSynUdWxh72OGLn8mnX`)
+      const colRef = doc(db_audio, 'capture', `FuSynUdWxh72OGLn8mnX`)
 
       await updateDoc(colRef, {
         tasks: formFields
