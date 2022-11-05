@@ -1,4 +1,4 @@
-import { arrayRemove, collection, doc, onSnapshot, query, updateDoc } from 'firebase/firestore'
+import { collection, onSnapshot, query } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
@@ -17,8 +17,8 @@ export interface ITask {
   }[]
 }
 
-export const Task: React.FC = () => {
-  const [task, setTask] = useState<ITask>({} as ITask)
+export const Tasks: React.FC = () => {
+  const [task, setTask] = useState<ITask[]>([])
   const [loading, setLoading] = useState(true)
   const { push } = useRouter()
 
@@ -37,7 +37,7 @@ export const Task: React.FC = () => {
 
         console.log(data)
 
-        setTask(data[0])
+        setTask(data)
       })
     } catch (err) {
       console.log(err)
@@ -51,49 +51,35 @@ export const Task: React.FC = () => {
 
     return () => getTasks()
   }, [])
-  async function remove(task: ITask) {
-    try {
-      const colRef = doc(db_audio, 'capture', `current_licao`)
 
-      await updateDoc(colRef, {
-        tasks: arrayRemove(task)
-      })
-      console.log('here')
-    } catch (err) {
-      console.log(err)
-    }
-  }
   return (
     <div className={styles.container_list_users}>
       <header>
         <h1>Novas Lições</h1>
-        {task.id === null??
-        <div>
-        <button>Finalizar</button>
-      <button>Deletar</button>
-
-        </div>
-
-        }
+        <button>Add nova licao</button>
       </header>
       {loading ? (
         <div className={styles.loading}>
           <LoadingAnimation />
         </div>
       ) : (
-        <div className={styles.task}>
-          <h2>
-            {task.title}
-          </h2>
+        <div className={styles.tasks}>
+        
           <ul>
-            {task.tasks ? (
-              task.tasks.map((item) => <li key={item.id}>{item.title}<button onClick={()=>remove(item)}>remove</button></li>)
+            {task ? (
+              task.map((item) => 
+              <li key={item.id}>
+                  <strong>{item.title}</strong>
+                  <span>Palavras{ item.tasks.length}</span>
+                  <button onClick={()=>push('capture/task')}>editar</button>
+                  <button>finalizar</button>
+              </li>)
             ) : (
               <span>Sem tarefas</span>
             )}
           </ul>
           <div style={{width: '200px'}}>
-          <Button onClick={() => push('/capture/createTask')} title="Adicionar novas palavras" />
+          <Button onClick={() => push('capture/createTask')} title="Adicionar novas palavras" />
 
           </div>
         </div>

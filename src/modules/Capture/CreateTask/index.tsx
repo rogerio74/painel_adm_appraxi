@@ -1,4 +1,4 @@
-import { doc, updateDoc } from 'firebase/firestore'
+import { arrayUnion, doc, FieldValue, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { ReactElement, useState } from 'react'
 import { Button } from '../../../common/components/Button'
@@ -24,9 +24,10 @@ export const CreateTask = () => {
       const colRef = doc(db_audio, 'capture', `current_licao`)
 
       await updateDoc(colRef, {
-        tasks
+        tasks: arrayUnion(...tasks)
       })
       back()
+      console.log('here')
     } catch (err) {
       console.log(err)
     }

@@ -1,0 +1,65 @@
+.container_list_users{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    header{
+      button{
+        width: 200px;
+      }
+    }
+
+  }
+
+.tasks{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  ul{
+    overflow-y: auto;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+    li{
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      list-style: none;
+      max-width:200px;
+      width: 100%;
+      height: auto;
+      background-color: white;
+      padding: 20px;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      border-radius: 5px;
+      border-left: 4px solid var(--primary);
+    }
+  }
+
+
+ 
+
+}
+.loading{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  width: 100%;
+  height: calc(100vh - 11rem);
+}
+.button_more{
+ background-color: var(--white);
+ border: 0;
+ width: 100%;
+ display: flex;
+ align-items: center;
+ padding: 0 1rem;
+ justify-content: center;
+}

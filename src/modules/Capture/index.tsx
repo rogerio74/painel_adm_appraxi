@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react'
 import { Layout } from '../../common/components/Layout'
-import { FormActivities } from './components/FormTask2'
-import { Task } from './components/Task'
+import { Tasks } from './components/Tasks'
 
 export const Capture = () => {
-  return <Task />
+  return <Tasks />
 }
 
 Capture.getLayout = function getLayout(page: ReactElement) {
