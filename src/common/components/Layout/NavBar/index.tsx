@@ -15,7 +15,8 @@ const Links = [
   { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Pacientes' },
   { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' },
   { id: '4', icon: <RiUserSettingsLine />, params: '/admins', title: 'Administradores' },
-  { id: '5', icon: <RiVoiceRecognitionFill />, params: '/capture', title: 'Captura' }
+  { id: '5', icon: <RiVoiceRecognitionFill />, params: '/capture', title: 'Captura' },
+  { id: '6', icon: <RiVoiceRecognitionFill />, params: '/lessons', title: 'Lições' },
 ]
 
 export const NavBar = () => {
