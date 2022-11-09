@@ -1,9 +1,8 @@
-import { addDoc, deleteDoc, collection, doc, onSnapshot, query, setDoc } from 'firebase/firestore'
+import { collection, deleteDoc, doc, onSnapshot, query, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
-import { Button } from '../../../../common/components/Button'
 
 import { db_audio } from '../../../../common/services/firebase_licao'
 import { ILesson } from '../../../Lessons/components/Task'
@@ -14,18 +13,18 @@ export interface ITask {
   title: string
   tasks: {
     id: string
-    title: string,
-    file:string
+    title: string
+    file: string
   }[]
 }
 
 export const Tasks: React.FC = () => {
-  const [task, setTask] = useState<ITask[]>([])
+  const [tasks, setTasks] = useState<ITask[]>([])
   const [loading, setLoading] = useState(true)
-  const [lenghtLesson, setlenghtLesson] = useState(0)
+  const [lenghtLesson, setLengthLesson] = useState(0)
   const { push } = useRouter()
 
-  function getTasks() {
+  function getTasksInCache() {
     try {
       const colRef = collection(db_audio, 'cache')
       const queryCollection = query(colRef)
@@ -38,9 +37,7 @@ export const Tasks: React.FC = () => {
           }
         }) as ITask[]
 
-        console.log(data)
-
-        setTask(data)
+        setTasks(data)
       })
     } catch (err) {
       console.log(err)
@@ -50,11 +47,15 @@ export const Tasks: React.FC = () => {
   }
 
   useEffect(() => {
-    getTasks()
-    getLessonLenght()
-    return () => {getTasks(); getLessonLenght()}
+    getTasksInCache()
+    getLessonLength()
+
+    return () => {
+      getTasksInCache()
+      getLessonLength()
+    }
   }, [])
-  function getLessonLenght() {
+  function getLessonLength() {
     setLoading(true)
     try {
       const colRef = collection(db_audio, 'licoes')
@@ -68,7 +69,7 @@ export const Tasks: React.FC = () => {
           }
         }) as ILesson[]
 
-        setlenghtLesson(data.length);
+        setLengthLesson(data.length)
       })
     } catch (err) {
       console.log(err)
@@ -76,19 +77,19 @@ export const Tasks: React.FC = () => {
       setLoading(false)
     }
   }
-  
-  async function finesheLesson(my_task: ITask) {
+
+  async function finishLesson(my_task: ITask) {
     try {
       const ref = doc(db_audio, 'licoes', `${my_task.title}`)
-      const palavras: any[] = []
+      const words: any[] = []
 
       my_task.tasks.forEach((item) => {
         const { title } = item
         const { file } = item
 
-        const v = { [title]: file }
+        const word = { [title]: file }
 
-        palavras.push(v)
+        words.push(word)
       })
       const lesson = {
         bloqueada: false,
@@ -96,7 +97,7 @@ export const Tasks: React.FC = () => {
         id: my_task.title,
         contador_pastas: 1,
         ordem: lenghtLesson.toString(),
-        palavras: [...palavras]
+        palavras: [...words]
       }
 
       await setDoc(ref, lesson)
@@ -106,22 +107,23 @@ export const Tasks: React.FC = () => {
       console.log(err)
     }
   }
-  async function removeLesson(task: ITask) {
+  async function removeLesson(my_task: ITask) {
     try {
-      const ref = doc(db_audio,'cache', `${task.title}`)
-    
-      await deleteDoc(ref)
+      const ref = doc(db_audio, 'cache', `${my_task.title}`)
 
-     
+      await deleteDoc(ref)
     } catch (err) {
       console.log(err)
     }
   }
+
   return (
     <div className={styles.container_list_users}>
       <header>
         <h1>Novas Lições</h1>
-        <button onClick={()=>push('/capture/createTask')}>Add nova licao</button>
+        <button type="button" onClick={() => push('/capture/createTask')}>
+          Add nova licao
+        </button>
       </header>
       {loading ? (
         <div className={styles.loading}>
@@ -129,24 +131,29 @@ export const Tasks: React.FC = () => {
         </div>
       ) : (
         <div className={styles.tasks}>
-        
           <ul>
-            {task ? (
-              task.map((item) => 
-              <li key={item.id}>
+            {tasks ? (
+              tasks.map((item) => (
+                <li key={item.id}>
                   <strong>{item.title}</strong>
-                  <span>Palavras{ item.tasks.length}</span>
-                  <button onClick={()=>push({pathname: 'capture/task', query:{id: item.id}})}>editar</button>
-                  <button onClick={()=>finesheLesson(item)}>finalizar</button>
-              </li>)
+                  <span>Palavras{item.tasks.length}</span>
+                  <button
+                    type="button"
+                    onClick={() => push({ pathname: 'capture/task', query: { id: item.id } })}
+                  >
+                    editar
+                  </button>
+                  <button type="button" onClick={() => finishLesson(item)}>
+                    finalizar
+                  </button>
+                </li>
+              ))
             ) : (
               <span>Sem tarefas</span>
             )}
           </ul>
-        
         </div>
       )}
-     
     </div>
   )
 }

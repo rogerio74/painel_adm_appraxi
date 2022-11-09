@@ -1,5 +1,5 @@
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react'
+import React, { Dispatch, FormEvent, SetStateAction, useRef, useState } from 'react'
 import { v4 } from 'uuid'
 import { Button } from '../../../../common/components/Button'
 import { Input } from '../../../../common/components/Input'
@@ -19,12 +19,13 @@ interface IFormActivitiesProps {
   isUpdate: boolean
 }
 
-export const FormActivities = ({ setTasks, isUpdate, setName , name}: IFormActivitiesProps) => {
-  const [titulo, setTitulo] = useState('')
+export const FormActivities = ({ setTasks, isUpdate, setName, name }: IFormActivitiesProps) => {
+  const [title, setTitle] = useState('')
   const [video, setVideo] = useState<File | undefined>(undefined)
   const [loading, setLoading] = useState(false)
 
-  const [p, setP] = React.useState(0)
+  const inputFileRef = useRef<HTMLInputElement>(null)
+  const [progress, setProgress] = React.useState(0)
   const onFileChange = async (e: FormEvent<HTMLInputElement>) => {
     const data = e.currentTarget.files![0]
 
@@ -43,10 +44,12 @@ export const FormActivities = ({ setTasks, isUpdate, setName , name}: IFormActiv
     uploadVideo.on(
       'state_changed',
       (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        const progressFormatter = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        )
 
         setLoading(true)
-        setP(progress)
+        setProgress(progressFormatter)
       },
       (error) => {
         alert(error)
@@ -57,14 +60,18 @@ export const FormActivities = ({ setTasks, isUpdate, setName , name}: IFormActiv
           setTasks((prev) => [
             ...prev,
             {
-              title: titulo,
+              title,
               id: v4().toString(),
               file: downloadURL
             }
           ])
           setLoading(false)
           setVideo(undefined)
-          setTitulo('')
+          setTitle('')
+          setVideo(undefined)
+          if (inputFileRef.current !== null) {
+            inputFileRef.current.value = ''
+          }
         })
       }
     )
@@ -72,22 +79,24 @@ export const FormActivities = ({ setTasks, isUpdate, setName , name}: IFormActiv
 
   return (
     <form onSubmit={onSubmit} className={style.form}>
-    {!isUpdate &&  <Input
-        label="Nome da Lição"
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-        placeholder="Informe o titulo da lição"
-      />}
-       <Input
+      {!isUpdate && (
+        <Input
+          label="Nome da Lição"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          placeholder="Informe o titulo da lição"
+        />
+      )}
+      <Input
         label="Nome da atividade"
-        onChange={(e) => setTitulo(e.target.value)}
-        value={titulo}
+        onChange={(e) => setTitle(e.target.value)}
+        value={title}
         placeholder="Informe o nome da atividade"
       />
 
-      <Input onChange={onFileChange} id="upload" type="file" label="Video" />
+      <Input ref={inputFileRef} onChange={onFileChange} id="upload" type="file" label="Video" />
 
-      <Button type="submit" title={loading ? `Enviando ${p}%` : `Adicionar`} />
+      <Button type="submit" title={loading ? `Enviando ${progress}%` : `Adicionar`} />
     </form>
   )
 }

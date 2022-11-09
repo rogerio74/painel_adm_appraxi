@@ -1,11 +1,10 @@
-import { addDoc, arrayUnion, collection, doc, FieldValue, setDoc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import React, { ReactElement, useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { Button } from '../../../common/components/Button'
 import { Layout } from '../../../common/components/Layout'
-import { db } from '../../../common/services'
 import { db_audio } from '../../../common/services/firebase_licao'
-import { FormActivities } from '../components/FormTask2'
+import { FormActivities } from '../components/FormActivities'
 import { ListTask } from './ListTasks'
 import styles from './styles.module.scss'
 
@@ -24,7 +23,7 @@ export const CreateTask = () => {
     try {
       const colRef = doc(db_audio, 'cache', name)
 
-      await setDoc(colRef, 
+      await setDoc(colRef,
         {title: name,tasks}
       )
       back()
