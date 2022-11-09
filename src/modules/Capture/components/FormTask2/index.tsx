@@ -14,9 +14,12 @@ interface ITask {
 }
 interface IFormActivitiesProps {
   setTasks: Dispatch<SetStateAction<ITask[]>>
+  setName: Dispatch<SetStateAction<string>>
+  name: string
+  isUpdate: boolean
 }
 
-export const FormActivities = ({ setTasks }: IFormActivitiesProps) => {
+export const FormActivities = ({ setTasks, isUpdate, setName , name}: IFormActivitiesProps) => {
   const [titulo, setTitulo] = useState('')
   const [video, setVideo] = useState<File | undefined>(undefined)
   const [loading, setLoading] = useState(false)
@@ -69,11 +72,17 @@ export const FormActivities = ({ setTasks }: IFormActivitiesProps) => {
 
   return (
     <form onSubmit={onSubmit} className={style.form}>
-      <Input
-        label="Titulo"
+    {!isUpdate &&  <Input
+        label="Nome da Lição"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
+        placeholder="Informe o titulo da lição"
+      />}
+       <Input
+        label="Nome da atividade"
         onChange={(e) => setTitulo(e.target.value)}
         value={titulo}
-        placeholder="Informe o titulo"
+        placeholder="Informe o nome da atividade"
       />
 
       <Input onChange={onFileChange} id="upload" type="file" label="Video" />

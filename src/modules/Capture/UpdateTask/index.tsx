@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, FieldValue, setDoc, updateDoc } from 'firebase/firestore'
+import { arrayUnion, doc, FieldValue, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { ReactElement, useState } from 'react'
 import { Button } from '../../../common/components/Button'
@@ -15,19 +15,20 @@ interface ITask {
   file: string
 }
 
-export const CreateTask = () => {
+export const UpdateTask = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
+  const { back , query: q} = useRouter()
   const [name, setName] = useState('')
-  const { back } = useRouter()
-
-  async function createTask() {
+console.log(q.id)
+  async function update() {
     try {
-      const colRef = doc(db_audio, 'cache', name)
+      const colRef = doc(db_audio, 'cache', `${q.id}`)
 
-      await setDoc(colRef, 
-        {title: name,tasks}
-      )
+      await updateDoc(colRef, {
+        tasks: arrayUnion(...tasks)
+      })
       back()
+      console.log('here')
     } catch (err) {
       console.log(err)
     }
@@ -37,7 +38,7 @@ export const CreateTask = () => {
     <div className={styles.container}>
       <div className={styles.form}>
         <h2>Adicionar Novas Lições</h2>
-        <FormActivities isUpdate={false} name={name} setName={setName} setTasks={setTasks} />
+        <FormActivities isUpdate={true} name={name} setName={setName} setTasks={setTasks} />
       </div>
       <div className={styles.tasks}>
         <h2>Lições</h2>
@@ -46,7 +47,7 @@ export const CreateTask = () => {
           <>
             <div className={styles.alert}> ⚠️ Essas lições irão substituir as atuais!!</div>
             <div className={styles.footer}>
-              <Button onClick={() => createTask()} title="Salvar" />
+              <Button onClick={() => update()} title="Salvar" />
               <Button onClick={() => back()} title="Cancelar" />
             </div>
           </>
@@ -56,6 +57,6 @@ export const CreateTask = () => {
   )
 }
 
-CreateTask.getLayout = function getLayout(page: ReactElement) {
+UpdateTask.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }

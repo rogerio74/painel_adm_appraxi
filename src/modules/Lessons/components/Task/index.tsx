@@ -9,7 +9,7 @@ import styles from './styles.module.scss'
 
 
 
-interface ILesson{
+export interface ILesson{
   bloqueada: boolean
   contador_arquivos: number
   contador_pastas: number
