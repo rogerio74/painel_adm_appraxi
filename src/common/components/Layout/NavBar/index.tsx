@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BiLogOutCircle } from 'react-icons/bi'
-import { BsBoxArrowLeft, BsBoxArrowRight } from 'react-icons/bs'
+import { BsBoxArrowLeft, BsBoxArrowRight, BsMicFill } from 'react-icons/bs'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
-import { RiVoiceRecognitionFill, RiUserSettingsLine, RiUserVoiceLine } from 'react-icons/ri'
+import { RiUserSettingsLine, RiUserVoiceLine, RiVoiceRecognitionFill } from 'react-icons/ri'
 import { useAuth } from '../../../contexts/AuthContext'
 import { LinkComponent } from './Link'
 import styles from './styles.module.scss'
@@ -15,8 +15,8 @@ const Links = [
   { id: '2', icon: <RiUserVoiceLine />, params: '/pacientes', title: 'Pacientes' },
   { id: '3', icon: <HiOutlineUserGroup />, params: '/fonoaudiologo', title: 'Fonoaudiologo' },
   { id: '4', icon: <RiUserSettingsLine />, params: '/admins', title: 'Administradores' },
-  { id: '5', icon: <RiVoiceRecognitionFill />, params: '/capture', title: 'Captura' },
-  { id: '6', icon: <RiVoiceRecognitionFill />, params: '/lessons', title: 'Lições' },
+  { id: '5', icon: <BsMicFill />, params: '/capture', title: 'Captura' },
+  { id: '6', icon: <RiVoiceRecognitionFill />, params: '/lessons', title: 'Lições' }
 ]
 
 export const NavBar = () => {
