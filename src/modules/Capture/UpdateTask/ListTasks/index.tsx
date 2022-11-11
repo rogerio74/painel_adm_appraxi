@@ -1,12 +1,3 @@
-import { collection, doc, onSnapshot, query, updateDoc } from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-
-import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
-import { Button } from '../../../../common/components/Button'
-import { useModal } from '../../../../common/contexts/ModalContext'
-
-import { db } from '../../../../common/services'
 import styles from './styles.module.scss'
 
 interface ITask {

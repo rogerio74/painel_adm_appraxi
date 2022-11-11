@@ -23,9 +23,7 @@ export const CreateTask = () => {
     try {
       const colRef = doc(db_audio, 'cache', name)
 
-      await setDoc(colRef,
-        {title: name,tasks}
-      )
+      await setDoc(colRef, { title: name, tasks })
       back()
     } catch (err) {
       console.log(err)
@@ -35,11 +33,11 @@ export const CreateTask = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form}>
-        <h2>Adicionar Novas Lições</h2>
+        <h2>Adicionar Nova Lição</h2>
         <FormActivities isUpdate={false} name={name} setName={setName} setTasks={setTasks} />
       </div>
       <div className={styles.tasks}>
-        <h2>Lições</h2>
+        <h2>Atividades</h2>
         <ListTask tasks={tasks} />
         {tasks.length !== 0 && (
           <>

@@ -16,9 +16,9 @@ interface ITask {
 
 export const UpdateTask = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
-  const { back , query: q} = useRouter()
+  const { back, query: q } = useRouter()
   const [name, setName] = useState('')
-console.log(q.id)
+
   async function update() {
     try {
       const colRef = doc(db_audio, 'cache', `${q.id}`)
@@ -36,11 +36,11 @@ console.log(q.id)
   return (
     <div className={styles.container}>
       <div className={styles.form}>
-        <h2>Adicionar Novas Lições</h2>
-        <FormActivities isUpdate={true} name={name} setName={setName} setTasks={setTasks} />
+        <h2>Adicionar Novas Atividades</h2>
+        <FormActivities isUpdate name={name} setName={setName} setTasks={setTasks} />
       </div>
       <div className={styles.tasks}>
-        <h2>Lições</h2>
+        <h2>Atividades</h2>
         <ListTask tasks={tasks} />
         {tasks.length !== 0 && (
           <>

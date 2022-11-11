@@ -1,23 +1,20 @@
-import { arrayRemove, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
 import { BsEye } from 'react-icons/bs'
-import { MdDeleteOutline } from 'react-icons/md'
+import { LoadingAnimation } from '../../../common/components/AnimationLoading'
+import { Layout } from '../../../common/components/Layout'
+import { ModalComponent } from '../../../common/components/Modal'
+import { useModal } from '../../../common/contexts/ModalContext'
+import { db_audio } from '../../../common/services/firebase_licao'
 
-import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
-import { Button } from '../../../../common/components/Button'
-import { Layout } from '../../../../common/components/Layout'
-import { ModalComponent } from '../../../../common/components/Modal'
-import { useModal } from '../../../../common/contexts/ModalContext'
-
-import { db_audio } from '../../../../common/services/firebase_licao'
 import { DetailsTask } from './details_task.tsx'
 import styles from './styles.module.scss'
 
 export interface ITask {
   id: string
   title: string
-  tasks: Iword[]
+  palavras: Iword[]
 }
 
 export interface Iword {
@@ -28,14 +25,14 @@ export interface Iword {
 
 export const Task = () => {
   const [task, setTask] = useState<ITask>({} as ITask)
-  const [detailsTask, setDetailsTask] = useState<Iword>({} as Iword)
+  const [detailsTask, setDetailsTask] = useState<Object>({} as Object)
   const [loading, setLoading] = useState(true)
   const { push, query: q } = useRouter()
   const { handleOpenModal } = useModal()
 
   const getTask = useCallback(async () => {
     try {
-      const docRef = doc(db_audio, 'cache', `${q.id}`)
+      const docRef = doc(db_audio, 'licoes', `${q.id}`)
       const docSnap = await getDoc(docRef)
       const taskData = { id: docSnap.id, ...docSnap.data() }
 
@@ -50,17 +47,7 @@ export const Task = () => {
   useEffect(() => {
     getTask()
   }, [task, getTask])
-  async function remove(my_task: Iword) {
-    try {
-      const colRef = doc(db_audio, 'cache', `${q.id}`)
 
-      await updateDoc(colRef, {
-        tasks: arrayRemove(my_task)
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  }
   function showDetails(word: Iword) {
     handleOpenModal()
     setDetailsTask(word)
@@ -69,12 +56,7 @@ export const Task = () => {
   return (
     <div className={styles.container_list_users}>
       <header>
-        <h1>{task.title}</h1>
-
-        <Button
-          onClick={() => push({ pathname: '/capture/updateTask', query: { id: q.id } })}
-          title="Adicionar Novas Palavras"
-        />
+        <h1>{task.id}</h1>
       </header>
       {loading ? (
         <div className={styles.loading}>
@@ -84,15 +66,10 @@ export const Task = () => {
         <div className={styles.task}>
           <h2>Atividades:</h2>
           <ul>
-            {task.tasks ? (
-              task.tasks.map((item) => (
-                <li key={item.id}>
-                  {item.title}
-                  <button type="button" onClick={() => remove(item)}>
-                    <span>
-                      <MdDeleteOutline /> Remover
-                    </span>
-                  </button>{' '}
+            {task.palavras ? (
+              task.palavras.map((item) => (
+                <li key={Object.keys(item)[0]}>
+                  <strong>{Object.keys(item)[0]}</strong>
                   <button type="button" onClick={() => showDetails(item)}>
                     <span>
                       <BsEye /> Detalhes
@@ -106,8 +83,8 @@ export const Task = () => {
           </ul>
         </div>
       )}
-      <ModalComponent title={detailsTask.title}>
-        <DetailsTask data={detailsTask} />
+      <ModalComponent title={Object.keys(detailsTask)[0]}>
+        <DetailsTask link={Object.values(detailsTask)[0]} />
       </ModalComponent>
     </div>
   )

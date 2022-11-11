@@ -1,8 +1,12 @@
 import { collection, deleteDoc, doc, onSnapshot, query, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { BiEdit } from 'react-icons/bi'
+import { MdDone } from 'react-icons/md'
+import { RiDeleteBinFill } from 'react-icons/ri'
 
 import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
+import { Button } from '../../../../common/components/Button'
 
 import { db_audio } from '../../../../common/services/firebase_licao'
 import { ILesson } from '../../../Lessons/components/Task'
@@ -116,14 +120,21 @@ export const Tasks: React.FC = () => {
       console.log(err)
     }
   }
+  async function remove(my_task: ITask) {
+    try {
+      const colRef = doc(db_audio, 'cache', `${my_task.id}`)
+
+      await deleteDoc(colRef)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <div className={styles.container_list_users}>
       <header>
         <h1>Novas Lições</h1>
-        <button type="button" onClick={() => push('/capture/createTask')}>
-          Add nova licao
-        </button>
+        <Button title="Add Nova Lição" type="button" onClick={() => push('/capture/createTask')} />
       </header>
       {loading ? (
         <div className={styles.loading}>
@@ -135,16 +146,27 @@ export const Tasks: React.FC = () => {
             {tasks ? (
               tasks.map((item) => (
                 <li key={item.id}>
-                  <strong>{item.title}</strong>
-                  <span>Palavras{item.tasks.length}</span>
+                  <strong>
+                    {item.title}{' '}
+                    <button onClick={() => remove(item)} type="button">
+                      <RiDeleteBinFill />
+                    </button>
+                  </strong>
+                  <span>Atividades: {item.tasks.length}</span>
                   <button
                     type="button"
                     onClick={() => push({ pathname: 'capture/task', query: { id: item.id } })}
                   >
-                    editar
+                    <span>
+                      <BiEdit />
+                      Editar
+                    </span>
                   </button>
                   <button type="button" onClick={() => finishLesson(item)}>
-                    finalizar
+                    <span>
+                      <MdDone />
+                      Finalizar
+                    </span>
                   </button>
                 </li>
               ))
