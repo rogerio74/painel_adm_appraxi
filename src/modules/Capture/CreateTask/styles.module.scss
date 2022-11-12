@@ -3,11 +3,16 @@
   height: 100vh;
   overflow: hidden;
   flex: 1;
-  padding: 2rem 4rem;
+  padding: 2rem 0rem;
   display: flex;
   justify-content: center;
   h2{
     margin: 1rem 0;
+  }
+  @media (max-width: 500px) {
+    flex-direction: column;
+    height: 100%;
+   
   }
 }
 .tasks{
@@ -15,6 +20,7 @@ flex: 1;
 padding: 1rem;
 position: relative;
 height: 100%;
+height: auto;
 
 footer{
   bottom: 0;
@@ -30,17 +36,7 @@ footer{
   padding: 1rem;
 
 }
-.alert{
-  width: 100%;
-  background-color: rgb(255, 232, 232);
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1rem;
-  color: red;
-  border-radius: 10px;
-}
+
 
 .footer{
   padding: 1rem;
@@ -48,8 +44,13 @@ footer{
   justify-content: center;
   align-items: center;
 
+
   gap: 10px;
   :last-child{
     background-color: rgb(255, 138, 138);
+  }
+  @media (max-width: 500px) {
+    flex-direction: column;
+   
   }
 }

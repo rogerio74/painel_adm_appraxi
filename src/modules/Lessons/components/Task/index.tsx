@@ -74,7 +74,7 @@ export const Task: React.FC = () => {
             {task ? (
               task.map((item) => (
                 <li key={item.id}>
-                  <strong>{item.id.split('_').join(' ')}</strong>
+                  <h2>{item.id.split('_').join(' ')}</h2>
                   <button type="button" onClick={() => handleEnabledLicao(item)}>
                     {item.bloqueada ? (
                       <span>

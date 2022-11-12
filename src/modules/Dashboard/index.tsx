@@ -41,8 +41,8 @@ export const Dashboard = () => {
       const patients = data.filter((item) => item.isAdmin === false && item.isFono === false)
 
       setGender({
-        f: patients.filter((item) => item.genero === 'Feminino').length,
-        m: patients.filter((item) => item.genero === 'Masculino').length
+        f: patients.filter((item) => item.sexo === 'Feminino').length,
+        m: patients.filter((item) => item.sexo === 'Masculino').length
       })
       setProfile({
         free: patients.filter((item) => item.isPremium !== true).length,

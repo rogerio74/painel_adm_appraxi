@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BiLogOutCircle } from 'react-icons/bi'
 import { BsBoxArrowLeft, BsBoxArrowRight, BsMicFill } from 'react-icons/bs'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
 import { RiUserSettingsLine, RiUserVoiceLine, RiVoiceRecognitionFill } from 'react-icons/ri'
 import { useAuth } from '../../../contexts/AuthContext'
-import { LinkComponent } from './Link'
 import styles from './styles.module.scss'
+import { LinkComponent } from './Link'
 
 const Links = [
   { id: '1', icon: <MdDashboard />, params: '/dashboard', title: 'Dashboard' },
@@ -49,6 +49,19 @@ export const NavBar = () => {
     }
   }
 
+  useEffect(() => {
+    function getWidth() {
+      if (window.innerWidth > 768) {
+        setOpenMenu(true)
+      } else {
+        setOpenMenu(false)
+      }
+    }
+    window.addEventListener('resize', getWidth)
+
+    return () => window.removeEventListener('resize', getWidth)
+  }, [])
+
   return (
     <motion.nav
       transition={{ duration: 0.2, delay: !openMenu ? 0.6 : 0 }}
@@ -72,7 +85,6 @@ export const NavBar = () => {
               initial="open"
               animate={openMenu ? 'open' : 'close'}
               variants={itensVariants}
-              transition={{ delay: !openMenu ? i * 0.1 : i * 0.4 }}
               {...item}
             />
           </li>

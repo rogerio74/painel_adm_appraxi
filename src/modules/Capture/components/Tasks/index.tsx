@@ -146,13 +146,13 @@ export const Tasks: React.FC = () => {
             {tasks ? (
               tasks.map((item) => (
                 <li key={item.id}>
-                  <strong>
-                    {item.title}{' '}
+                  <div className={styles.title_card}>
+                    <h2>{item.title} </h2>
                     <button onClick={() => remove(item)} type="button">
                       <RiDeleteBinFill />
                     </button>
-                  </strong>
-                  <span>Atividades: {item.tasks.length}</span>
+                  </div>
+                  <strong>Atividades: {item.tasks.length}</strong>
                   <button
                     type="button"
                     onClick={() => push({ pathname: 'capture/task', query: { id: item.id } })}

@@ -1,12 +1,9 @@
 .container_layout {
   width: 100vw;
   min-height: 100vh;
-
   display: flex;
   @media (max-width: 500px) {
     display: flex;
-    flex-direction: column;
-    align-items: center;
 
     padding: 1rem;
 
@@ -26,8 +23,6 @@
     display: block;
 
     height: 100vh;
-    width: 100%;
-    padding-top: 2rem;
     @media (max-width: 500px) {
         width: 100%;
         height: 100%;
@@ -41,28 +36,32 @@
 
       padding: 0 3rem;
 
+      padding-bottom: 1rem;
+
     header {
       display: flex;
+      
+      width: 100vw;
       align-items: center;
       justify-content: space-between;
 
       position: sticky;
       z-index: 11;
-      top: 0;
 
       width: 100%;
 
+      top: 0px;
 
-      padding: 3rem 0.4rem 1rem;
+      padding: 2rem 0.4rem .5rem;
 
-      background-color: var(--bg);
+      background-color: var(--bgColor);
 
       @media (max-width: 700px) {
         top: 0;
         left: 0;
         right: 0;
 
-        padding: 0.4rem 0;
+        padding: 2rem 0 0.6rem;
 
       }
       @media (max-width: 500px) {
@@ -70,7 +69,6 @@
         left: 0;
         right: 0;
 
-        padding: 0.4rem 0;
 
       }
 
@@ -88,6 +86,7 @@
   }
 
   .box_list {
+
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -113,19 +112,58 @@
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
         padding: 0rem;
         overflow: auto;
         display: flex;
         width: 100%;
     }
     @media (max-width: 500px) {
-        padding: 0rem;
+        padding: 0;
         margin: 0;
-        margin-top:3rem ;
-        padding: 0.4rem;
+        display: grid;
+        
         width: 100%;
     }
   }
 }
 
+.nav_mobile{
+  display: none;
+  position: fixed;
+
+  left: 30px;
+  bottom: 5.6rem;
+
+  button:first-child{
+  width: 50px;
+  height: 50px;
+
+  position: fixed;
+
+  bottom: 2rem;
+  left: 25px;
+
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--primary);
+
+  color: var(--white);
+  }
+  a{
+    padding: 0;
+    margin: 0;
+  }
+  @media (max-width: 500px) {
+    padding: 0;
+
+    z-index: 1111;
+    width: 40px;
+
+    nav{
+      display: inline;
+      width: 50px;
+    }
+    display: flex;
+}
+}

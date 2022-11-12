@@ -73,7 +73,7 @@ export const Task = () => {
 
         <Button
           onClick={() => push({ pathname: '/capture/updateTask', query: { id: q.id } })}
-          title="Adicionar Novas Palavras"
+          title="Add Novas Palavras"
         />
       </header>
       {loading ? (
@@ -87,7 +87,7 @@ export const Task = () => {
             {task.tasks ? (
               task.tasks.map((item) => (
                 <li key={item.id}>
-                  {item.title}
+                  <h2>{item.title}</h2>
                   <button type="button" onClick={() => remove(item)}>
                     <span>
                       <MdDeleteOutline /> Remover

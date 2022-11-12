@@ -1,13 +1,11 @@
 .container_list_users{
     width: 100%;
     height: 100%;
-    overflow: hidden;
     header{
       button{
         width: 250px;
       }
     }
-
   }
 
 .task{
@@ -56,6 +54,15 @@
       }
 
 
+    }
+  }
+  @media (max-width: 760px) {
+    ul{
+      flex-direction: column;
+      li{
+        width: 100%;
+        max-width: 100%;
+      }
     }
   }
 

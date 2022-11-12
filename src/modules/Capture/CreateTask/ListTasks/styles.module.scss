@@ -8,8 +8,11 @@
     }
 
     overflow-y: auto;
-    height: 200px;
+    height: 260px;
     padding-bottom: 1rem;
+    @media (max-width: 500px) {
+      height: 100%;
+    }
   }
   .alert{
 

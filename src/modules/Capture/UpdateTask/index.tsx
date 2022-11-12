@@ -43,13 +43,10 @@ export const UpdateTask = () => {
         <h2>Atividades</h2>
         <ListTask tasks={tasks} />
         {tasks.length !== 0 && (
-          <>
-            <div className={styles.alert}> ⚠️ Essas lições irão substituir as atuais!!</div>
-            <div className={styles.footer}>
-              <Button onClick={() => update()} title="Salvar" />
-              <Button onClick={() => back()} title="Cancelar" />
-            </div>
-          </>
+          <div className={styles.footer}>
+            <Button onClick={() => update()} title="Salvar" />
+            <Button onClick={() => back()} title="Cancelar" />
+          </div>
         )}
       </div>
     </div>
