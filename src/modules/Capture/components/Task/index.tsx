@@ -1,6 +1,7 @@
 import { arrayRemove, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { BiArrowBack } from 'react-icons/bi'
 import { BsEye } from 'react-icons/bs'
 import { MdDeleteOutline } from 'react-icons/md'
 
@@ -31,7 +32,7 @@ export const Task = () => {
   const [task, setTask] = useState<ITask>({} as ITask)
   const [detailsTask, setDetailsTask] = useState<Iword>({} as Iword)
   const [loading, setLoading] = useState(true)
-  const { push, query: q } = useRouter()
+  const { push, query: q, back } = useRouter()
   const { handleOpenModal } = useModal()
 
   const getTask = useCallback(async () => {
@@ -70,11 +71,14 @@ export const Task = () => {
   return (
     <div className={styles.container_list_users}>
       <header>
+        {' '}
+        <span>
+          <BiArrowBack onClick={() => back()} />
+        </span>
         <h1>{task.title}</h1>
-
         <Button
           onClick={() => push({ pathname: '/capture/updateTask', query: { id: q.id } })}
-          title="Add Novas Atividades"
+          title="Add Atividades"
         />
       </header>
       {loading ? (

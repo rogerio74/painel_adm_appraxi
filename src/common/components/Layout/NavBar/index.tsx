@@ -22,7 +22,7 @@ const Links = [
 export const NavBar = () => {
   const [openMenu, setOpenMenu] = useState(true)
   const { asPath } = useRouter()
-  const { signOut } = useAuth()
+  const { signOut, userDt } = useAuth()
 
   function handleOpenMenu() {
     setOpenMenu(!openMenu)
@@ -71,6 +71,9 @@ export const NavBar = () => {
       variants={menuVariants}
     >
       <div className={styles.header_nav_bar}>
+        <motion.h2 initial="open" animate={openMenu ? 'open' : 'close'} variants={itensVariants}>
+          {userDt?.nome}
+        </motion.h2>
         <motion.h2 initial="open" animate={openMenu ? 'open' : 'close'} variants={itensVariants}>
           Appraxi
         </motion.h2>

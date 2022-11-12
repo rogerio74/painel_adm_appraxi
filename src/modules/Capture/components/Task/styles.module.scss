@@ -6,8 +6,28 @@
 
     > header{
       margin-bottom: 1rem;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
       button{
         width: auto;
+      }
+     
+      @media (max-width: 500px) {
+        font-size: 1.4 !important;
+        position: relative;
+        
+        h1{
+          margin-left: 2.3rem;
+          margin-bottom: 4px;
+          font-size: 1.4rem !important;
+          position: absolute;
+        }
+          svg{
+            font-size: 2rem !important;
+
+        
+        }
       }
     }
 
