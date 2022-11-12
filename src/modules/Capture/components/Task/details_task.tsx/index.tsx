@@ -1,8 +1,8 @@
-import { word } from '..'
+import { Iword } from '..'
 import styles from './styles.module.scss'
 
 interface IDetailTask {
-  data: word
+  data: Iword
 }
 
 export const DetailsTask = ({ data }: IDetailTask) => {
