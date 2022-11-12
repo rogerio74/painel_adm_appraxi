@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
+    "@types/nprogress": "^0.2.0",
     "@types/react-lottie": "^1.2.6",
     "@types/react-modal": "^3.13.1",
     "@types/uuid": "^8.3.4",
@@ -21,6 +22,7 @@
     "jwt-decode": "^3.1.2",
     "next": "12.1.6",
     "nookies": "^2.5.2",
+    "nprogress": "^0.2.0",
     "react": "18.1.0",
     "react-apexcharts": "^1.4.0",
     "react-audio-player": "^0.17.0",

@@ -7,6 +7,7 @@ import { RiDeleteBinFill } from 'react-icons/ri'
 
 import { LoadingAnimation } from '../../../../common/components/AnimationLoading'
 import { Button } from '../../../../common/components/Button'
+import { showToast } from '../../../../common/components/Toast'
 
 import { db_audio } from '../../../../common/services/firebase_licao'
 import { ILesson } from '../../../Lessons/components/Task'
@@ -25,6 +26,7 @@ export interface ITask {
 export const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadingButton, setLoadingButton] = useState(false)
   const [lenghtLesson, setLengthLesson] = useState(0)
   const { push } = useRouter()
 
@@ -83,6 +85,7 @@ export const Tasks: React.FC = () => {
   }
 
   async function finishLesson(my_task: ITask) {
+    setLoadingButton(true)
     try {
       const ref = doc(db_audio, 'licoes', `${my_task.title}`)
       const words: any[] = []
@@ -105,10 +108,13 @@ export const Tasks: React.FC = () => {
       }
 
       await setDoc(ref, lesson)
+      showToast({ type: 'success', message: 'Lição finalizada com sucesso!' })
+      await push('/lessons')
       await removeLesson(my_task)
-      push('/lessons')
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoadingButton(false)
     }
   }
   async function removeLesson(my_task: ITask) {
@@ -133,7 +139,7 @@ export const Tasks: React.FC = () => {
   return (
     <div className={styles.container_list_users}>
       <header>
-        <h1>Novas Lições</h1>
+        <h1>Novas Lições Para Captura</h1>
         <Button title="Add Nova Lição" type="button" onClick={() => push('/capture/createTask')} />
       </header>
       {loading ? (
@@ -143,7 +149,7 @@ export const Tasks: React.FC = () => {
       ) : (
         <div className={styles.tasks}>
           <ul>
-            {tasks ? (
+            {tasks.length > 0 ? (
               tasks.map((item) => (
                 <li key={item.id}>
                   <div className={styles.title_card}>
@@ -162,16 +168,26 @@ export const Tasks: React.FC = () => {
                       Editar
                     </span>
                   </button>
-                  <button type="button" onClick={() => finishLesson(item)}>
+                  <button disabled={loadingButton} type="button" onClick={() => finishLesson(item)}>
                     <span>
                       <MdDone />
-                      Finalizar
+                      {loadingButton ? 'Finalizando...' : 'Finalizar'}
                     </span>
                   </button>
                 </li>
               ))
             ) : (
-              <span>Sem tarefas</span>
+              <div
+                style={{
+                  width: '100%',
+                  height: '60vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <span>Sem Lições</span>
+              </div>
             )}
           </ul>
         </div>

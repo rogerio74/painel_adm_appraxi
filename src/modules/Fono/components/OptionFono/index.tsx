@@ -1,4 +1,5 @@
 import { doc, updateDoc } from 'firebase/firestore'
+import Image from 'next/image'
 import React from 'react'
 import { BiPhone, BiUser } from 'react-icons/bi'
 import { HiOutlineIdentification, HiOutlineMail, HiOutlineUser } from 'react-icons/hi'
@@ -31,7 +32,7 @@ export const OptionsFono = ({ data }: IOptionFono) => {
   return (
     <div className={styles.container}>
       <div className={styles.fono}>
-        {data.fotoPerfil ? <img alt="perfil" src={data.fotoPerfil} /> : <HiOutlineUser />}
+        {data.fotoPerfil ? <Image alt="perfil" src={data.fotoPerfil} /> : <HiOutlineUser />}
         <div className={styles.content}>
           <span>
             <BiUser />

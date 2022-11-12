@@ -8,6 +8,7 @@ import { LoadingAnimation } from '../../../../common/components/AnimationLoading
 import { Button } from '../../../../common/components/Button'
 import { Layout } from '../../../../common/components/Layout'
 import { ModalComponent } from '../../../../common/components/Modal'
+import { showToast } from '../../../../common/components/Toast'
 import { useModal } from '../../../../common/contexts/ModalContext'
 
 import { db_audio } from '../../../../common/services/firebase_licao'
@@ -73,7 +74,7 @@ export const Task = () => {
 
         <Button
           onClick={() => push({ pathname: '/capture/updateTask', query: { id: q.id } })}
-          title="Add Novas Palavras"
+          title="Add Novas Atividades"
         />
       </header>
       {loading ? (

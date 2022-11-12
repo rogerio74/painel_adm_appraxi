@@ -78,13 +78,13 @@ export const Task: React.FC = () => {
                   <button type="button" onClick={() => handleEnabledLicao(item)}>
                     {item.bloqueada ? (
                       <span>
-                        <BiLock />
-                        Bloquada
+                        <BiLockOpen />
+                        Desbloquear
                       </span>
                     ) : (
                       <span>
-                        <BiLockOpen />
-                        Desbloquada
+                        <BiLock />
+                        Bloquear
                       </span>
                     )}
                   </button>
@@ -92,7 +92,9 @@ export const Task: React.FC = () => {
                     type="button"
                     onClick={() => push({ pathname: 'lessons/details', query: { id: item.id } })}
                   >
-                    <BsEye /> Ver Detalhes
+                    <span>
+                      <BsEye /> Ver Detalhes
+                    </span>
                   </button>
                 </li>
               ))
