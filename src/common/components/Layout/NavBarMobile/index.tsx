@@ -23,15 +23,15 @@ export const NavBarMobile = () => {
     <motion.nav className={styles.container_navBar}>
       <ul data-isopen={open}>
         <li>
-          <Link href="/home">
-            <a data-isactive={asPath.includes('/home')}>
+          <Link href="/dashboard">
+            <a data-isactive={asPath.includes('/dashboard')}>
               <MdDashboard />
             </a>
           </Link>
         </li>
         <li>
-          <Link href="/users">
-            <a data-isactive={asPath.includes('/users')}>
+          <Link href="/pacientes">
+            <a data-isactive={asPath.includes('/pacientes')}>
               <RiUserVoiceLine />
             </a>
           </Link>
@@ -39,21 +39,28 @@ export const NavBarMobile = () => {
 
         <li>
           <Link href="/projects">
-            <a data-isactive={asPath.includes('/settlements')}>
+            <a data-isactive={asPath.includes('/projects')}>
               <RiUserSettingsLine />
             </a>
           </Link>
         </li>
         <li>
-          <Link href="/inspections">
-            <a data-isactive={asPath.includes('/inspections')}>
+          <Link href="/admins">
+            <a data-isactive={asPath.includes('/admins')}>
               <BsMicFill />
             </a>
           </Link>
         </li>
 
-        <li data-isactive={asPath.includes('/notifications')}>
-          <Link href="/notifications">
+        <li data-isactive={asPath.includes('/capture')}>
+          <Link href="/capture">
+            <a>
+              <BsMicFill />
+            </a>
+          </Link>
+        </li>
+        <li data-isactive={asPath.includes('/lessons')}>
+          <Link href="/lessons">
             <a>
               <RiVoiceRecognitionFill />
             </a>
