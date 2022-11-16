@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { BiLogOutCircle } from 'react-icons/bi'
 import { BsMicFill } from 'react-icons/bs'
+import { HiOutlineUserGroup } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
 import { RiUserSettingsLine, RiUserVoiceLine, RiVoiceRecognitionFill } from 'react-icons/ri'
 import { useAuth } from '../../../contexts/AuthContext'
@@ -39,15 +40,15 @@ export const NavBarMobile = () => {
 
         <li>
           <Link href="/projects">
-            <a data-isactive={asPath.includes('/projects')}>
-              <RiUserSettingsLine />
+            <a data-isactive={asPath.includes('/fonoaudiologo')}>
+              <HiOutlineUserGroup />
             </a>
           </Link>
         </li>
         <li>
           <Link href="/admins">
             <a data-isactive={asPath.includes('/admins')}>
-              <BsMicFill />
+              <RiUserSettingsLine />
             </a>
           </Link>
         </li>
