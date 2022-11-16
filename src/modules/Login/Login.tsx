@@ -53,7 +53,6 @@ export const Login = () => {
             Painel administrativo para o gerencimento <br /> do aplicativo Appraxi
           </p>
         </span>
-        <Image src={Illustration} alt="illustration of dashboard" />
       </div>
       <div className={styles.right_login}>
         <div className={styles.box_login}>
